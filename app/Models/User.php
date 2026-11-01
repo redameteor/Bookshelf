@@ -62,7 +62,7 @@ class User extends Authenticatable
     }
 
     // ユーザーがいいねしたレビュー一覧
-    public function reviewLikes()
+    public function likedReviews()
     {
         return $this->belongsToMany(Review::class, 'review_likes');
     }
