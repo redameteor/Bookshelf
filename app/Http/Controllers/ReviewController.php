@@ -4,18 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Review;
+use App\Http\Requests\StoreReviewRequest;
+use App\Http\Requests\UpdateReviewRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
     // レビューの新規投稿
-    public function store(Request $request, Book $book)
+    public function store(StoreReviewRequest $request, Book $book)
     {
-        $validated = $request->validate([
-            'rating' => 'required|integer|min:1|max:5',
-            'comment' => 'nullable|string|max:1000',
-        ]);
+        $validated = $request->validated();
 
         $book->reviews()->create([
             'user_id' => Auth::id(),
@@ -35,14 +34,11 @@ class ReviewController extends Controller
     }
 
     // レビューの更新
-    public function update(Request $request, Review $review)
+    public function update(UpdateReviewRequest $request, Review $review)
     {
         $this->authorize('update', $review);
 
-        $validated = $request->validate([
-            'rating' => 'required|integer|min:1|max:5',
-            'comment' => 'nullable|string|max:1000',
-        ]);
+        $validated = $request->validated();
 
         $review->update($validated);
 
@@ -65,7 +61,6 @@ class ReviewController extends Controller
     {
         $user = Auth::user();
         
-        // 多対多のリレーション（likedReviews）を用いたトグル処理
         $user->likedReviews()->toggle($review->id);
 
         return back();

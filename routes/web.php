@@ -16,8 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [BookController::class, 'index'])->name('books.index');
 Route::get('/books', [BookController::class, 'index'])->name('books.index');
 Route::get('/books/{book}', [BookController::class, 'show'])->name('books.show');
-Route::get('/genres', [GenreController::class, 'index'])->name('genres.index');
-Route::get('/genres/{genre}', [GenreController::class, 'show'])->name('genres.show');
 Route::get('/ranking', [RankingController::class, 'index'])->name('ranking.index');
 
 // ログイン済みユーザーのみアクセスできるページ
@@ -29,8 +27,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/books/{book}', [BookController::class, 'destroy'])->name('books.destroy');
     Route::get('/books/{book}/edit', [BookController::class, 'edit'])->name('books.edit');
     // ジャンル関連のルート
-    Route::get('/genres/create', [GenreController::class, 'create'])->name('genres.create');    
+    Route::get('/genres', [GenreController::class, 'index'])->name('genres.index');
+    Route::get('/genres/create', [GenreController::class, 'create'])->name('genres.create');
+    Route::post('/genres', [GenreController::class, 'store'])->name('genres.store');
+    Route::get('/genres/{genre}', [GenreController::class, 'show'])->name('genres.show');
     Route::get('/genres/{genre}/edit', [GenreController::class, 'edit'])->name('genres.edit');
+    Route::put('/genres/{genre}', [GenreController::class, 'update'])->name('genres.update');
     Route::delete('/genres/{genre}', [GenreController::class, 'destroy'])->name('genres.destroy');
     // レビュー関連のルート
     Route::post('/books/{book}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
