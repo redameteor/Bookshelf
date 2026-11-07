@@ -22,7 +22,7 @@ class ReviewController extends Controller
             'comment' => $validated['comment'] ?? null,
         ]);
 
-        return redirect()->route('books.show', $book)->with('success', 'レビューを投稿しました！');
+        return redirect()->route('books.show', $book)->with('success', 'レビューを投稿しました。');
     }
 
     // レビュー編集の表示
@@ -42,7 +42,7 @@ class ReviewController extends Controller
 
         $review->update($validated);
 
-        return redirect()->route('books.show', $review->book_id)->with('success', 'レビューを更新しました！');
+        return redirect()->route('books.show', $review->book_id)->with('success', 'レビューを更新しました。');
     }
 
     // レビューの削除
@@ -53,7 +53,7 @@ class ReviewController extends Controller
         $bookId = $review->book_id;
         $review->delete();
 
-        return redirect()->route('books.show', $bookId)->with('success', 'レビューを削除しました！');
+        return redirect()->route('books.show', $bookId)->with('success', 'レビューを削除しました。');
     }
 
     // いいね（お気に入り）の切り替え

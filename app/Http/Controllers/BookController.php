@@ -66,7 +66,7 @@ class BookController extends Controller
         // ジャンルの紐付け
         $book->genres()->attach($genreIds);
 
-        return redirect()->route('books.index')->with('success', '書籍を登録しました！');
+        return redirect()->route('books.index')->with('success', '書籍を登録しました。');
     }
 
     // 書籍編集の表示
@@ -92,7 +92,7 @@ class BookController extends Controller
         $book->update($validated);
         $book->genres()->sync($genreIds);
 
-        return redirect()->route('books.show', $book)->with('success', '書籍情報を更新しました！');
+        return redirect()->route('books.show', $book)->with('success', '書籍情報を更新しました。');
     }
 
     // 書籍の削除
@@ -102,6 +102,6 @@ class BookController extends Controller
 
         $book->delete();
 
-        return redirect()->route('books.index')->with('success', '書籍を削除しました！');
+        return redirect()->route('books.index')->with('success', '書籍を削除しました。');
     }
 }

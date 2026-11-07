@@ -13,7 +13,7 @@ class FavoriteController extends Controller
     {
         $user = Auth::user();
 
-        $books = $user->favoriteBooks()->latest()->paginate(20);
+        $books = $user->favorites()->latest()->paginate(20);
 
         return view('favorites.index', compact('books'));
     }

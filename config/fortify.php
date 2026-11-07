@@ -73,7 +73,7 @@ return [
     |
     */
 
-    'home' => '\App\Providers\RouteServiceProvider::HOME',
+    'home' => '/books',
 
     /*
     |--------------------------------------------------------------------------

@@ -23,7 +23,7 @@ class FavoriteSeeder extends Seeder
             $bookIds = $favoriteBooks->pluck('id')->toArray();
 
             // syncWithoutDetachingで重複登録を防ぎながら紐づけ
-            $user->favoriteBooks()->syncWithoutDetaching($bookIds);
+            $user->favorites()->syncWithoutDetaching($bookIds);
         }
     }
 }

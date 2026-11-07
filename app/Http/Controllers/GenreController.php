@@ -14,7 +14,7 @@ class GenreController extends Controller
     // ジャンル一覧の表示
     public function index()
     {
-        // 書籍数（books_count）を一緒に集計して取得
+        // 書籍数を一緒に集計して取得
         $genres = Genre::withCount('books')->orderBy('id', 'desc')->get();
 
         return view('genres.index', compact('genres'));
@@ -26,7 +26,7 @@ class GenreController extends Controller
         return view('genres.create');
     }
 
-    // ジャンルの登録処理
+    // ジャンルの登録
     public function store(StoreGenreRequest $request)
     {
         $validated = $request->validated();
@@ -52,7 +52,7 @@ class GenreController extends Controller
         return view('genres.edit', compact('genre'));
     }
 
-    // ジャンルの更新処理
+    // ジャンルの更新
     public function update(UpdateGenreRequest $request, Genre $genre)
     {
         $validated = $request->validated();
@@ -63,7 +63,7 @@ class GenreController extends Controller
             ->with('success', 'ジャンルを更新しました。');
     }
 
-    // ジャンルの削除処理
+    // ジャンルの削除
     public function destroy(Genre $genre)
     {
         // 紐づきがある場合の削除制限

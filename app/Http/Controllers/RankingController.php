@@ -18,6 +18,6 @@ class RankingController extends Controller
             ->take(10)                           // 上位10件に制限
             ->get();
 
-        return view('ranking', compact('rankedBooks'));
+        return view('ranking.index', compact('rankedBooks'));
     }
 }
