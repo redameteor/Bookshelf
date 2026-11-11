@@ -14,7 +14,7 @@ class BookApiTest extends TestCase
     use RefreshDatabase;
 
     // API書籍一覧の検索・絞り込み
-    public function can_search_and_filter_books_with_parameters(): void
+    public function test_can_search_and_filter_books_with_parameters(): void
     {
         $genre = Genre::factory()->create();
         
@@ -38,7 +38,7 @@ class BookApiTest extends TestCase
     }
 
     // API一覧のページネーション
-    public function pagination_structure_is_returned_correctly(): void
+    public function test_pagination_structure_is_returned_correctly(): void
     {
         Book::factory()->count(25)->create();
 
@@ -55,7 +55,7 @@ class BookApiTest extends TestCase
     }
 
     // 存在しない書籍IDでの取得時に404が返る
-    public function returns_404_when_book_id_does_not_exist(): void
+    public function test_returns_404_when_book_id_does_not_exist(): void
     {
         $response = $this->getJson('/api/v1/books/99999');
 
@@ -63,7 +63,7 @@ class BookApiTest extends TestCase
     }
 
     // バリデーションエラー時に422が返る（登録時）
-    public function returns_422_on_book_creation_validation_error(): void
+    public function test_returns_422_on_book_creation_validation_error(): void
     {
         $user = User::factory()->create();
 
@@ -78,7 +78,7 @@ class BookApiTest extends TestCase
     }
 
     // バリデーションエラー時に422が返る（更新時）
-    public function returns_422_on_book_update_validation_error(): void
+    public function test_returns_422_on_book_update_validation_error(): void
     {
         // 条件：必須項目の欠如による更新エラー
         $user = User::factory()->create();
@@ -93,7 +93,7 @@ class BookApiTest extends TestCase
     }
 
     // 書籍削除時に関連データも削除されること
-    public function cascade_deletion_deletes_related_data_when_book_is_deleted(): void
+    public function test_cascade_deletion_deletes_related_data_when_book_is_deleted(): void
     {
         $user = User::factory()->create();
         $book = Book::factory()->create();
@@ -110,7 +110,7 @@ class BookApiTest extends TestCase
         $this->assertDatabaseMissing('books', ['id' => $book->id]);
         $this->assertDatabaseMissing('reviews', ['id' => $review->id]);
         $this->assertDatabaseMissing('favorites', ['book_id' => $book->id]);
-        // ジャンル本体ではなく、中間テーブルの紐づきが消えている
+        // ジャンル本体ではない、中間テーブルの紐づきが消えている
         $this->assertDatabaseMissing('book_genre', ['book_id' => $book->id, 'genre_id' => $genre->id]);
         // ジャンル自体は削除されない
         $this->assertDatabaseHas('genres', ['id' => $genre->id]);

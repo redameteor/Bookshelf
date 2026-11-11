@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateBookRequest extends FormRequest
 {
@@ -22,14 +23,14 @@ class UpdateBookRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|integer|exists:users,id',
+            //'user_id' => 'required|integer|exists:users,id',
             'title' => 'required|string|max:255',
             'author' => 'required|string|max:255',
-            'isbn' => 'nullable|string|digits:13|unique:books,isbn,'. $this->route('book'),
+            'isbn' => ['nullable', 'string', 'digits:13', Rule::unique('books', 'isbn')->ignore($this->route('book')->id)],
             'published_at' => 'nullable|date',
             'genre_ids' => 'required|array|min:1',
             'genre_ids.*' => 'exists:genres,id',
-            'image_url' => 'nullable|url|max:2048',
+            'image_url' => 'nullable|url|max:255',
             'description' => 'nullable|string|max:2000',
         ];
     }
@@ -50,7 +51,7 @@ class UpdateBookRequest extends FormRequest
             'genre_ids.min' => 'ジャンルは１つ以上選択してください。',
             'genre_ids.*.exists' => '選択されたジャンルが存在しません。',
             'image_url.url' => '画像URLは有効なURL形式である必要があります。',
-            'image_url.max' => '画像URLの長さは2048文字以内にしてください。',
+            'image_url.max' => '画像URLの長さは255文字以内にしてください。',
             'description.max' => '説明は2000文字以内で入力してください。',
         ];
     }

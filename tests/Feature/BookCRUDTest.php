@@ -9,7 +9,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class BookCrudTest extends TestCase
+class BookCRUDTest extends TestCase
 {
     use RefreshDatabase;
 
