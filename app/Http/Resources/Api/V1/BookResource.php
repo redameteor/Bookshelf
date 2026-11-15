@@ -50,12 +50,8 @@ class BookResource extends JsonResource
                     ];
                 });
             }),
-            'reviews_count' =>$this->whenCounted('reviews', $this->reviews_count ?? $this->reviews?->count()),
-            'average_rating' => $this->when(isset($this->reviews_avg_rating),
-                function () { 
-                    return round((float) $this->reviews_avg_rating, 1);
-                }
-            ),
+            'reviews_count' => $this->reviews_count ?? 0,
+            'average_rating' => round((float) ($this->reviews_avg_rating ?? 0), 1),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

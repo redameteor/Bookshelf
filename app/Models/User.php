@@ -56,9 +56,15 @@ class User extends Authenticatable
     }
 
     // ユーザーがお気に入りした書籍一覧
+    public function favoriteBooks()
+    {
+        return $this->belongsToMany(Book::class, 'favorites', 'user_id', 'book_id')->withTimestamps();
+    }
+
+    // ユーザーのお気に入り一覧
     public function favorites()
     {
-        return $this->belongsToMany(Book::class, 'favorites');
+        return $this->hasMany(Favorite::class);
     }
 
     // ユーザーがいいねしたレビュー一覧

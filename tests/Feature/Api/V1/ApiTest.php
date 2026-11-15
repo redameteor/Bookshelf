@@ -105,7 +105,7 @@ class BookApiTest extends TestCase
 
         $response = $this->actingAs($user)->deleteJson("/api/v1/books/{$book->id}");
 
-        $response->assertStatus(200);
+        $response->assertStatus(204);
 
         $this->assertDatabaseMissing('books', ['id' => $book->id]);
         $this->assertDatabaseMissing('reviews', ['id' => $review->id]);

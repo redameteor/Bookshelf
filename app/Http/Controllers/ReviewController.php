@@ -14,6 +14,11 @@ class ReviewController extends Controller
     // レビューの新規投稿
     public function store(StoreReviewRequest $request, Book $book)
     {
+        $alreadyReviewed = $book->reviews()->where('user_id', Auth::id())->exists();
+        if ($alreadyReviewed) {
+            return back()->withErrors(['review' => '既にレビューを投稿しています。']);
+        }
+        
         $validated = $request->validated();
 
         $book->reviews()->create([

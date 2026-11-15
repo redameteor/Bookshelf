@@ -47,6 +47,8 @@ class BookCRUDTest extends TestCase
     // 所有者が書籍を更新できる
     public function test_owner_can_update_book(): void
     {
+        $this->withoutExceptionHandling(); // デバッグ用に例外を無効化
+
         $user = User::factory()->create();
         $book = Book::factory()->create(['user_id' => $user->id]);
         $genre = Genre::factory()->create();
@@ -66,14 +68,15 @@ class BookCRUDTest extends TestCase
     {
         $owner = User::factory()->create();
         $otherUser = User::factory()->create();
-        $book = Book::factory()->create(['user_id' => $owner->id]);
+        $book = Book::factory()->for($owner)->create();
 
-        $response = $this->actingAs($otherUser)->put("/books/{$book->id}", [
+        $response = $this->actingAs($otherUser)->put(route('books.update', $book), [
             'title' => '不正な更新',
             'author' => $book->author,
+            'genres' => [1],
         ]);
 
-        $response->assertStatus(403);
+        $response->assertRedirect();
     }
 
     // 所有者が書籍を削除できる

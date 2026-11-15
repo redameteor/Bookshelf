@@ -24,9 +24,10 @@ class BookController extends Controller
             });
         }
 
-        if ($request->filled('genre_id')) {
-            $query->whereHas('genres', function ($q) use ($request) {
-                $q->where('genres.id', $request->genre_id);
+        $genreId = $request->input('genre') ?? $request->input('genre_id');
+        if ($genreId) {
+            $query->whereHas('genres', function ($q) use ($genreId) {
+            $q->where('genres.id', $genreId);
             });
         }
 
@@ -86,7 +87,7 @@ class BookController extends Controller
 
         $validated = $request->validated();
 
-        $genreIds = $validated['genres'];
+        $genreIds = $validated['genres'] ?? [];
         unset($validated['genres']);
 
         $book->update($validated);

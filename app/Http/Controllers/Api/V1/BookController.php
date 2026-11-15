@@ -113,6 +113,6 @@ class BookController extends Controller
         }*/
         $book->delete();
 
-        return response()->json(null, 204);
+        return response()->json(['message' => '書籍が削除されました。'], 204);
     }
 }

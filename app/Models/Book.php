@@ -31,6 +31,12 @@ class Book extends Model
         return $this->hasMany(Review::class);
     }
 
+    // 書籍につけられたお気に入り一覧
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
     // 書籍をお気に入りしたユーザー一覧
     public function favoritedByUsers()
     {
